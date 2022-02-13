@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformeVentasUsuarios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27b51436-c656-45d1-b688-cc00b2e6daea">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YFJlZ2lzdHJvVmVudGFzYCAsMTUsMTQ1LDA0N2E4ZTk1LTA3MDgtNGMwYS05NDQyLTM0MzYwMGI5
+YzNhODt2ZW50YXByb2R1Y3RvICwxNTQsOTgsODgyNDEwNjctMWRiMS00ZjEzLTgyNmMtZDhmYzUy
+ZjVlYmQzO3VzdWFyaW9zICwxNSwyNDQsYjQ1MjI2MWMtMGE5ZC00NjkyLTlmZDItZDgzOGUxOWZj
+MDUxO3Byb2R1Y3RvcyAsMTUsMTUsN2QzNTQ4N2EtZTg0YS00MjUzLTg4NmQtNWE4ZTU5NzdiZDYx
+Ow==]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT usuarios.nombre AS Vendedor,
+	CONCAT( Productos.precio * SUM( ventaproducto.cant_vendida),'€') AS TotalVentas,
+	ventaproducto.producto,
+	ventaproducto.`Venta`,
+	ventaproducto.`Vendedor`,
+	ventaproducto.cant_vendida,
+	productos.`idProducto`,
+	productos.precio,
+	`RegistroVentas`.`idVenta`,
+	usuarios.`idUsuario`
+FROM ventaproducto
+	INNER JOIN productos ON 
+	 productos.`idProducto` = ventaproducto.producto 
+	INNER JOIN `RegistroVentas` ON 
+	 `RegistroVentas`.`idVenta` = ventaproducto.`Venta` 
+	INNER JOIN usuarios ON 
+	 usuarios.`idUsuario` = ventaproducto.`Vendedor` 
+GROUP BY usuarios.nombre
+ORDER BY productos.precio DESC]]>
+	</queryString>
+	<field name="Vendedor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Vendedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="Vendedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="usuarios"/>
+	</field>
+	<field name="TotalVentas" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TotalVentas"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalVentas"/>
+	</field>
+	<field name="producto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="producto"/>
+		<property name="com.jaspersoft.studio.field.label" value="producto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventaproducto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Venta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Venta"/>
+		<property name="com.jaspersoft.studio.field.label" value="Venta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventaproducto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_5" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Vendedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="Vendedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventaproducto"/>
+	</field>
+	<field name="cant_vendida" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cant_vendida"/>
+		<property name="com.jaspersoft.studio.field.label" value="cant_vendida"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ventaproducto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idProducto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idProducto"/>
+		<property name="com.jaspersoft.studio.field.label" value="idProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio" class="java.lang.Float">
+		<property name="com.jaspersoft.studio.field.name" value="precio"/>
+		<property name="com.jaspersoft.studio.field.label" value="precio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idVenta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idVenta"/>
+		<property name="com.jaspersoft.studio.field.label" value="idVenta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="registroventas"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idUsuario" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="idUsuario"/>
+		<property name="com.jaspersoft.studio.field.label" value="idUsuario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="usuarios"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="-20" y="0" width="270" height="30" uuid="d727853e-9577-4d65-9a1d-9642024624d5"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Informe de ventas por vendedor]]></text>
+			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement x="270" y="0" width="142" height="30" uuid="43ea081c-6eef-4916-b4d0-555228bc030c"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="420" y="0" width="142" height="30" uuid="4a1831b2-746f-4426-bef0-1b3f90ea2a84"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="70" y="0" width="100" height="30" uuid="771fc786-55fa-4440-a147-9e46b1f4fc01">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ac7bb40d-1241-428f-947d-03b1cdd9508b"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Vendedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="100" height="30" uuid="bf95e443-d506-4d50-b2bb-e0be8d7fddb7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="43efebb5-ece5-4791-bdec-36b61d19a8e5"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[TotalVentas]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="-1" width="100" height="30" uuid="78e8f64c-8bd8-4ce9-b5ea-4e7319ca4a06">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ac7bb40d-1241-428f-947d-03b1cdd9508b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Vendedor}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="270" y="0" width="100" height="30" uuid="355568cc-a47f-4ab5-ba1a-ca09c28467d6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="43efebb5-ece5-4791-bdec-36b61d19a8e5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{TotalVentas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="350" y="0" width="100" height="30" uuid="318f4e66-1d78-466c-996c-71985508bc0d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="456" y="0" width="100" height="30" uuid="be56e42d-5187-476f-b605-6274836d0d67"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="297" splitType="Stretch">
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="40" y="10" width="450" height="287" uuid="2738bc2a-a729-48c6-8f1e-5b9531de9424"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<dataset resetType="Report"/>
+					<keyExpression><![CDATA[$F{Vendedor}.toString()]]></keyExpression>
+					<valueExpression><![CDATA[$F{COLUMN_5}]]></valueExpression>
+					<labelExpression><![CDATA[$F{TotalVentas}]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>

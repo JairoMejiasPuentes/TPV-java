@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="informeVentasFechaNuevo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="18863d47-b21d-451e-be05-fbdcf7c7ed20">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<parameter name="fechaInicio" class="java.lang.String"/>
+	<parameter name="fechaFin" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT DATE_FORMAT( registroventas.FechaVenta,'%d/%m/%y') AS fecha,
+	productos.nombre AS producto,
+	CONCAT( productos.precio * SUM( ventaproducto.cant_vendida),'€') AS Total
+FROM `ventaproducto`
+	INNER JOIN productos ON 
+	 productos.`idProducto` = `ventaproducto`.producto 
+	INNER JOIN `registroVentas` ON 
+	 `registroVentas`.`idVenta` = `ventaproducto`.`venta` 
+WHERE 
+	 `registroVentas`.`fechaVenta` BETWEEN   $P{fechaInicio}  AND  $P{fechaFin} 
+	 GROUP BY productos.nombre,
+	`registroVentas`.`fechaVenta`
+ORDER BY `registroVentas`.`fechaVenta` ASC]]>
+	</queryString>
+	<field name="fecha" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+	</field>
+	<field name="producto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="producto"/>
+		<property name="com.jaspersoft.studio.field.label" value="producto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="productos"/>
+	</field>
+	<field name="Total" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Total"/>
+		<property name="com.jaspersoft.studio.field.label" value="Total"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="250" height="30" uuid="718ffa1f-aece-45eb-a2a2-ed20dc0973ed"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Informe fecha Ventas Nuevo]]></text>
+			</staticText>
+			<textField pattern="HH:mm">
+				<reportElement x="250" y="0" width="142" height="30" uuid="1aac9f48-f283-4228-9244-b41e7db5517e"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="414" y="0" width="142" height="30" uuid="dd273aaf-afe0-4f73-88ab-1366752ac819"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="185" height="30" uuid="5916c262-dd45-48f6-a387-17a2ea9e6b8e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f4071444-6893-4472-98fa-eb9f94eb72e5"/>
+				</reportElement>
+				<text><![CDATA[fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="0" width="185" height="30" uuid="3193f454-d77f-424f-a497-a2e0b4cbbc19">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3fbb9a7a-e0b0-4ecd-86b3-653b9563fb72"/>
+				</reportElement>
+				<text><![CDATA[producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="0" width="185" height="30" uuid="a86e2889-a172-471d-8a8c-0a33fe5eef4e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d30ae278-2e87-4ad7-91e3-250189796331"/>
+				</reportElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="185" height="30" uuid="26e2a2ab-17de-42d3-b967-b9f895b3b258">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f4071444-6893-4472-98fa-eb9f94eb72e5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="0" width="185" height="30" uuid="5d48f1ce-b3f8-46cb-ab95-e61cb36523e1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3fbb9a7a-e0b0-4ecd-86b3-653b9563fb72"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="0" width="185" height="30" uuid="252283e1-894e-4c63-a617-963147d9add8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d30ae278-2e87-4ad7-91e3-250189796331"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="456" y="0" width="100" height="30" uuid="228a7b95-bb84-465b-bfbc-5b60d05d4580"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="0" width="100" height="30" uuid="b4881488-b244-4a7d-930e-ab59a39c4dfb"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
